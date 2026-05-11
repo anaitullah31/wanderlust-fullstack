@@ -6,10 +6,10 @@ import {
   Calendar,
   Check,
   MapPin,
-  Pencil,
   Star,
   Trash2,
 } from "lucide-react";
+import EditModal from "@/app/components/EditModal";
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -45,12 +45,9 @@ const DestinationDetailsPage = async ({ params }) => {
         </Link>
 
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 border px-4 py-2 text-sm hover:bg-gray-50">
-            <Pencil size={14} />
-            Edit
-          </button>
+          <EditModal />
 
-          <button className="flex items-center gap-2 border border-red-200 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
+          <button className="flex items-center gap-2 cursor-pointer border border-red-200 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
             <Trash2 size={14} />
             Delete
           </button>
