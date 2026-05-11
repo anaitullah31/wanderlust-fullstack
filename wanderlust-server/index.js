@@ -142,6 +142,35 @@ async function run() {
       }
     });
 
+    app.delete("/api/v1/destinations/:id", async (req, res) => {
+      try {
+        const { id } = req.params;
+
+        const result = await destinationCollection.deleteOne({
+          _id: new ObjectId(id),
+        });
+
+        if (result.deletedCount === 0) {
+          return res.status(404).json({
+            success: false,
+            message: "Destination not found",
+          });
+        }
+
+        res.status(200).json({
+          success: true,
+          message: "Destination deleted successfully",
+          deletedCount: result.deletedCount,
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Failed to delete destination",
+          error: error.message,
+        });
+      }
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(

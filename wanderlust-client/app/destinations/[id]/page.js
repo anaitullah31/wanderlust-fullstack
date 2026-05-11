@@ -7,9 +7,9 @@ import {
   Check,
   MapPin,
   Star,
-  Trash2,
 } from "lucide-react";
 import EditModal from "@/app/components/EditModal";
+import DeleteAlert from "@/app/components/DeleteAlert";
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -19,7 +19,7 @@ const DestinationDetailsPage = async ({ params }) => {
   });
 
   const data = await res.json();
-  const destinationDetails = data.data;
+  const destinationDetails = data?.data;
 
   const {
     _id,
@@ -47,10 +47,7 @@ const DestinationDetailsPage = async ({ params }) => {
         <div className="flex items-center gap-3">
           <EditModal destinationDetails={destinationDetails} />
 
-          <button className="flex items-center gap-2 cursor-pointer border border-red-200 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
-            <Trash2 size={14} />
-            Delete
-          </button>
+          <DeleteAlert destinationDetails={destinationDetails} />
         </div>
       </div>
 
