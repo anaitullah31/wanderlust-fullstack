@@ -40,6 +40,25 @@ async function run() {
       .db("wanderlust")
       .collection("destination");
 
+    app.get("/api/v1/destinations", async (req, res) => {
+      try {
+        const result = await destinationCollection.find().toArray();
+
+        res.status(200).json({
+          success: true,
+          message: "Destinations retrieved successfully",
+          total: result.length,
+          data: result,
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Failed to retrieve destinations",
+          error: error.message,
+        });
+      }
+    });
+
     app.post("/api/v1/destinations", async (req, res) => {
       try {
         const destinationData = req.body;

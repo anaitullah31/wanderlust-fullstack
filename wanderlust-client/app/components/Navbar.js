@@ -21,7 +21,7 @@ const Navbar = () => {
           </li>
         </ul>
         <div>
-          <Image src={Logo} width={150} height={150} alt="Wanderlust" />
+          <Image src={Logo} width={150} height={150} alt="Wanderlust" style={{ width: "auto", height: "auto" }} />
         </div>
         <div>
           <ul className="flex gap-4">
