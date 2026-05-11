@@ -13,11 +13,19 @@ import {
 import React from "react";
 
 const AddDestinationPage = () => {
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const destination = Object.fromEntries(formData.entries());
-    console.log(destination);
+
+    const res = await fetch("http://localhost:5000/api/v1/destinations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(destination),
+    });
+    const data = await res.json();
   };
 
   return (

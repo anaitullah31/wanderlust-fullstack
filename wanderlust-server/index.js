@@ -4,11 +4,16 @@
 
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 // Configure DOTENV
 // require("dotenv").config();
 const dotenv = require("dotenv");
 dotenv.config();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
