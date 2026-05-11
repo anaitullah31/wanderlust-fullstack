@@ -15,7 +15,7 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const port = process.env.PORT || 5000;
 
@@ -59,6 +59,34 @@ async function run() {
       }
     });
 
+    app.get("/api/v1/destinations/:id", async (req, res) => {
+      try {
+        const { id } = req.params;
+
+        const result = await destinationCollection.findOne({
+          _id: new ObjectId(id),
+        });
+
+        if (!result) {
+          return res.status(404).json({
+            success: false,
+            message: "Destination not found",
+          });
+        }
+
+        res.status(200).json({
+          success: true,
+          message: "Destination retrieved successfully",
+          data: result,
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Failed to retrieve destination",
+          error: error.message,
+        });
+      }
+    });
     app.post("/api/v1/destinations", async (req, res) => {
       try {
         const destinationData = req.body;

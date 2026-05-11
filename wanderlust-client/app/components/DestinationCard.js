@@ -62,7 +62,7 @@ const DestinationCard = ({ destination }) => {
 
         <div className="flex items-center justify-between mt-5">
           <Link
-            href={`/`}
+            href={`/destinations/${_id}`}
             className="flex items-center gap-2 text-cyan-600 font-semibold uppercase hover:gap-3 transition-all"
           >
             Book Now
