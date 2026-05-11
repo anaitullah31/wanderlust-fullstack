@@ -13,11 +13,18 @@ import {
 import React from "react";
 
 const AddDestinationPage = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const destination = Object.fromEntries(formData.entries());
+    console.log(destination);
+  };
+
   return (
     <div className="max-w-7xl mx-auto py-16">
       <h2 className="text-2xl font-bold mb-7">Add Destination Page</h2>
       <Card>
-        <form className="space-y-8 p-8">
+        <form onSubmit={onSubmit} className="space-y-8 p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Destination Name */}
             <div className="md:col-span-2">

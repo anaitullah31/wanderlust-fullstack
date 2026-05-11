@@ -31,6 +31,30 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    const destinationCollection = client
+      .db("wanderlust")
+      .collection("destination");
+
+    app.post("/api/v1/destinations", async (req, res) => {
+      try {
+        const destinationData = req.body;
+
+        const result = await destinationCollection.insertOne(destinationData);
+
+        res.status(201).json({
+          success: true,
+          message: "Destination added successfully",
+          insertedId: result.insertedId,
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Failed to add destination",
+          error: error.message,
+        });
+      }
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
