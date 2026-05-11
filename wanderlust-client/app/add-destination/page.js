@@ -29,132 +29,161 @@ const AddDestinationPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-16">
-      <h2 className="text-2xl font-bold mb-7">Add Destination Page</h2>
+    <div className="max-w-7xl mx-auto pb-8">
       <Card>
-        <form onSubmit={onSubmit} className="space-y-8 p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Destination Name */}
-            <div className="md:col-span-2">
-              <TextField name="destinationName" isRequired>
-                <Label>Destination Name</Label>
-                <Input placeholder="Bali Paradise" className="rounded-2xl" />
-                <FieldError />
-              </TextField>
-            </div>
-
-            {/* Country */}
-            <TextField name="country" isRequired>
-              <Label>Country</Label>
-              <Input placeholder="Indonesia" className="rounded-2xl" />
-              <FieldError />
-            </TextField>
-
-            {/* Category - Updated Select Component */}
+        <div className="p-6">
+          <h2 className="text-2xl font-bold mb-3">Add Destination Page</h2>
+          <form onSubmit={onSubmit} className=" space-y-5">
             <div>
-              <Select
-                name="category"
-                isRequired
-                className="w-full"
-                placeholder="Select category"
-              >
-                <Label>Category</Label>
-                <Select.Trigger className="rounded-2xl">
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-                <Select.Popover>
-                  <ListBox>
-                    <ListBox.Item id="Beach" textValue="Beach">
-                      Beach
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                    <ListBox.Item id="Mountain" textValue="Mountain">
-                      Mountain
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                    <ListBox.Item id="City" textValue="City">
-                      City
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                    <ListBox.Item id="Adventure" textValue="Adventure">
-                      Adventure
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                    <ListBox.Item id="Cultural" textValue="Cultural">
-                      Cultural
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                    <ListBox.Item id="Luxury" textValue="Luxury">
-                      Luxury
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-            </div>
-
-            {/* Price */}
-            <TextField name="price" type="number" isRequired>
-              <Label>Price (USD)</Label>
-              <Input type="number" placeholder="1299" className="rounded-2xl" />
-              <FieldError />
-            </TextField>
-
-            {/* Duration */}
-            <TextField name="duration" isRequired>
-              <Label>Duration</Label>
-              <Input placeholder="7 Days / 6 Nights" className="rounded-2xl" />
-              <FieldError />
-            </TextField>
-
-            {/* Departure Date */}
-            <div className="md:col-span-2">
-              <TextField name="departureDate" type="date" isRequired>
-                <Label>Departure Date</Label>
-                <Input type="date" className="rounded-2xl" />
+              <TextField name="destinationName" isRequired>
+                <Label className="text-sm font-medium text-black">
+                  Destination Name
+                </Label>
+                <Input
+                  placeholder="Bali Paradise"
+                  className="mt-2 w-full rounded-none border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none"
+                />
                 <FieldError />
               </TextField>
             </div>
 
-            {/* Image URL - Removed preview */}
-            <div className="md:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <TextField name="country" isRequired>
+                <Label className="text-sm font-medium text-black">
+                  Country
+                </Label>
+                <Input
+                  placeholder="Indonesia"
+                  className="mt-2 w-full rounded-none border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none"
+                />
+                <FieldError />
+              </TextField>
+
+              <div>
+                <Select name="category" isRequired className="w-full">
+                  <Label className="text-sm font-medium text-black">
+                    Category
+                  </Label>
+                  <Select.Trigger className="mt-2 w-full rounded-none border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none flex items-center justify-between">
+                    <Select.Value />
+                    <Select.Indicator />
+                  </Select.Trigger>
+
+                  <Select.Popover>
+                    <ListBox>
+                      <ListBox.Item id="Beach" textValue="Beach">
+                        Beach
+                        <ListBox.ItemIndicator />
+                      </ListBox.Item>
+                      <ListBox.Item id="Mountain" textValue="Mountain">
+                        Mountain
+                        <ListBox.ItemIndicator />
+                      </ListBox.Item>
+                      <ListBox.Item id="City" textValue="City">
+                        City
+                        <ListBox.ItemIndicator />
+                      </ListBox.Item>
+                      <ListBox.Item id="Adventure" textValue="Adventure">
+                        Adventure
+                        <ListBox.ItemIndicator />
+                      </ListBox.Item>
+                      <ListBox.Item id="Cultural" textValue="Cultural">
+                        Cultural
+                        <ListBox.ItemIndicator />
+                      </ListBox.Item>
+                      <ListBox.Item id="Luxury" textValue="Luxury">
+                        Luxury
+                        <ListBox.ItemIndicator />
+                      </ListBox.Item>
+                    </ListBox>
+                  </Select.Popover>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <TextField name="price" type="number" isRequired>
+                <Label className="text-sm font-medium text-black">
+                  Price (USD)
+                </Label>
+                <Input
+                  type="number"
+                  placeholder="e.g., 1299"
+                  className="mt-2 w-full rounded-none border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none"
+                />
+                <FieldError />
+              </TextField>
+
+              <TextField name="duration" isRequired>
+                <Label className="text-sm font-medium text-black">
+                  Duration
+                </Label>
+                <Input
+                  placeholder="e.g., 7 Days / 6 Nights"
+                  className="mt-2 w-full rounded-none border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none"
+                />
+                <FieldError />
+              </TextField>
+            </div>
+
+            <div>
+              <TextField name="departureDate" type="date" isRequired>
+                <Label className="text-sm font-medium text-black">
+                  Departure Date
+                </Label>
+                <Input
+                  type="date"
+                  className="mt-2 w-full rounded-none border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none"
+                />
+                <FieldError />
+              </TextField>
+            </div>
+
+            <div>
               <TextField name="imageUrl" isRequired>
-                <Label>Image URL</Label>
+                <Label className="text-sm font-medium text-black">
+                  Image URL
+                </Label>
                 <Input
                   type="url"
-                  placeholder="https://example.com/bali-paradise.jpg"
-                  className="rounded-2xl"
+                  placeholder="https://example.com/image.jpg"
+                  className="mt-2 w-full rounded-none border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none"
                 />
                 <FieldError />
               </TextField>
             </div>
 
-            {/* Description */}
-            <div className="md:col-span-2">
+            <div>
               <TextField name="description" isRequired>
-                <Label>Description</Label>
+                <Label className="text-sm font-medium text-black">
+                  Description
+                </Label>
                 <TextArea
                   placeholder="Describe the travel experience..."
-                  className="rounded-3xl"
+                  className="mt-2 min-h-36 w-full rounded-none border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none"
                 />
                 <FieldError />
               </TextField>
             </div>
-          </div>
 
-          {/* Buttons */}
+            <div className="flex justify-end gap-3 pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                className="rounded-none border border-red-400 px-6 py-3 text-red-500 bg-white hover:bg-red-50"
+              >
+                Cancel
+              </Button>
 
-          <Button
-            type="submit"
-            variant="outline"
-            //   isLoading={isPending}
-            className="w-full rounded-md bg-cyan-500 text-white"
-          >
-            {/* {isPending ? "Adding Package..." : "Add Travel Package"} */}
-            Add Destination
-          </Button>
-        </form>
+              <Button
+                type="submit"
+                className="rounded-none bg-cyan-600 px-6 py-3 text-white hover:bg-cyan-700"
+              >
+                Add Travel Package
+              </Button>
+            </div>
+          </form>
+        </div>
       </Card>
     </div>
   );
