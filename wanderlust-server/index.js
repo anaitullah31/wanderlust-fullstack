@@ -4,14 +4,19 @@
 
 const express = require("express");
 const app = express();
-require("dotenv").config();
+
+// Configure DOTENV
+// require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
+
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
 const port = process.env.PORT || 5000;
 
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rsynxg9.mongodb.net/?appName=Cluster0`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rsynxg9.mongodb.net/?appName=Cluster0`;
 
-const uri = `mongodb+srv://wanderlust:0iWjo8yDwcrtSbio@cluster0.rsynxg9.mongodb.net/?appName=Cluster0`;
+// const uri = `mongodb+srv://wanderlust:0iWjo8yDwcrtSbio@cluster0.rsynxg9.mongodb.net/?appName=Cluster0`;
 
 const client = new MongoClient(uri, {
   serverApi: {
