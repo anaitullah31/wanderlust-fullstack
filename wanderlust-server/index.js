@@ -107,6 +107,41 @@ async function run() {
       }
     });
 
+    app.patch("/api/v1/destinations/:id", async (req, res) => {
+      try {
+        const { id } = req.params;
+        const updatedData = req.body;
+
+        const result = await destinationCollection.updateOne(
+          {
+            _id: new ObjectId(id),
+          },
+          {
+            $set: updatedData,
+          },
+        );
+
+        if (result.matchedCount === 0) {
+          return res.status(404).json({
+            success: false,
+            message: "Destination not found",
+          });
+        }
+
+        res.status(200).json({
+          success: true,
+          message: "Destination updated successfully",
+          modifiedCount: result.modifiedCount,
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Failed to update destination",
+          error: error.message,
+        });
+      }
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(

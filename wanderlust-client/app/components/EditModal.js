@@ -1,5 +1,4 @@
 "use client";
-import { Envelope } from "@gravity-ui/icons";
 import {
   Button,
   Card,
@@ -13,20 +12,40 @@ import {
   TextArea,
 } from "@heroui/react";
 import { Pencil } from "lucide-react";
-const EditModal = () => {
+import { useRouter } from "next/navigation";
+const EditModal = ({ destinationDetails }) => {
+  const router = useRouter();
+  const {
+    _id,
+    destinationName,
+    country,
+    category,
+    price,
+    duration,
+    departureDate,
+    imageUrl,
+    description,
+  } = destinationDetails;
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const destination = Object.fromEntries(formData.entries());
 
-    // const res = await fetch("http://localhost:5000/api/v1/destinations", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(destination),
-    // });
-    // const data = await res.json();
+    const res = await fetch(
+      `http://localhost:5000/api/v1/destinations/${_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(destination),
+      },
+    );
+    const data = await res.json();
+    if (data.modifiedCount > 0) {
+      router.refresh();
+    }
   };
   return (
     <Modal>
@@ -51,7 +70,11 @@ const EditModal = () => {
                   </Modal.Header>
                   <form onSubmit={onSubmit} className=" space-y-5">
                     <div>
-                      <TextField name="destinationName" isRequired>
+                      <TextField
+                        defaultValue={destinationName}
+                        name="destinationName"
+                        isRequired
+                      >
                         <Label className="text-sm font-medium text-black">
                           Destination Name
                         </Label>
@@ -64,7 +87,11 @@ const EditModal = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      <TextField name="country" isRequired>
+                      <TextField
+                        defaultValue={country}
+                        name="country"
+                        isRequired
+                      >
                         <Label className="text-sm font-medium text-black">
                           Country
                         </Label>
@@ -76,7 +103,12 @@ const EditModal = () => {
                       </TextField>
 
                       <div>
-                        <Select name="category" isRequired className="w-full">
+                        <Select
+                          defaultValue={category}
+                          name="category"
+                          isRequired
+                          className="w-full"
+                        >
                           <Label className="text-sm font-medium text-black">
                             Category
                           </Label>
@@ -121,7 +153,12 @@ const EditModal = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      <TextField name="price" type="number" isRequired>
+                      <TextField
+                        defaultValue={price}
+                        name="price"
+                        type="number"
+                        isRequired
+                      >
                         <Label className="text-sm font-medium text-black">
                           Price (USD)
                         </Label>
@@ -133,7 +170,11 @@ const EditModal = () => {
                         <FieldError />
                       </TextField>
 
-                      <TextField name="duration" isRequired>
+                      <TextField
+                        defaultValue={duration}
+                        name="duration"
+                        isRequired
+                      >
                         <Label className="text-sm font-medium text-black">
                           Duration
                         </Label>
@@ -146,7 +187,12 @@ const EditModal = () => {
                     </div>
 
                     <div>
-                      <TextField name="departureDate" type="date" isRequired>
+                      <TextField
+                        defaultValue={departureDate}
+                        name="departureDate"
+                        type="date"
+                        isRequired
+                      >
                         <Label className="text-sm font-medium text-black">
                           Departure Date
                         </Label>
@@ -159,7 +205,11 @@ const EditModal = () => {
                     </div>
 
                     <div>
-                      <TextField name="imageUrl" isRequired>
+                      <TextField
+                        defaultValue={imageUrl}
+                        name="imageUrl"
+                        isRequired
+                      >
                         <Label className="text-sm font-medium text-black">
                           Image URL
                         </Label>
@@ -173,7 +223,11 @@ const EditModal = () => {
                     </div>
 
                     <div>
-                      <TextField name="description" isRequired>
+                      <TextField
+                        defaultValue={description}
+                        name="description"
+                        isRequired
+                      >
                         <Label className="text-sm font-medium text-black">
                           Description
                         </Label>

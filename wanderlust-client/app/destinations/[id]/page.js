@@ -45,7 +45,7 @@ const DestinationDetailsPage = async ({ params }) => {
         </Link>
 
         <div className="flex items-center gap-3">
-          <EditModal />
+          <EditModal destinationDetails={destinationDetails} />
 
           <button className="flex items-center gap-2 cursor-pointer border border-red-200 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
             <Trash2 size={14} />
