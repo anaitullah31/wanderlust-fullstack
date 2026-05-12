@@ -39,6 +39,9 @@ async function run() {
     const destinationCollection = client
       .db("wanderlust")
       .collection("destination");
+    const reviewsCollection = client
+      .db("wanderlust")
+      .collection("travelerreviews");
 
     app.get("/api/v1/destinations", async (req, res) => {
       try {
@@ -166,6 +169,26 @@ async function run() {
         res.status(500).json({
           success: false,
           message: "Failed to delete destination",
+          error: error.message,
+        });
+      }
+    });
+
+    // REVIEWS OPERATIONS
+    app.get("/api/v1/travelerreviews", async (req, res) => {
+      try {
+        const result = await reviewsCollection.find().toArray();
+
+        res.status(200).json({
+          success: true,
+          message: "Traveler reviews retrieved successfully",
+          total: result.length,
+          data: result,
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Failed to retrieve traveler reviews",
           error: error.message,
         });
       }
