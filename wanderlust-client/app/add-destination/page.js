@@ -10,6 +10,7 @@ import {
   Button,
   Card,
 } from "@heroui/react";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const AddDestinationPage = () => {
@@ -26,6 +27,10 @@ const AddDestinationPage = () => {
       body: JSON.stringify(destination),
     });
     const data = await res.json();
+    console.log(data.insertedId);
+    if(data.insertedId){
+      redirect("/destinations");
+    }
   };
 
   return (

@@ -15,7 +15,7 @@ const DeleteAlert = ({ destinationDetails }) => {
     );
     const data = await res.json();
     if (data.deletedCount > 0) {
-      redirect('/destinations');
+      redirect("/destinations");
     }
   };
   return (
@@ -28,7 +28,7 @@ const DeleteAlert = ({ destinationDetails }) => {
       </Modal.Trigger>
       <AlertDialog.Backdrop>
         <AlertDialog.Container>
-          <AlertDialog.Dialog className="sm:max-w-100">
+          <AlertDialog.Dialog className="sm:max-w-100 rounded-md">
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
@@ -44,10 +44,20 @@ const DeleteAlert = ({ destinationDetails }) => {
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
-              <Button slot="close" variant="tertiary">
+              <Button
+                slot="close"
+                type="button"
+                className="rounded-none border border-gray-300 bg-white px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors"
+              >
                 Cancel
               </Button>
-              <Button onClick={handleDelete} slot="close" variant="danger">
+
+              <Button
+                onClick={handleDelete}
+                slot="close"
+                type="button"
+                className="rounded-none bg-red-600 px-6 py-3 text-white hover:bg-red-700 transition-colors"
+              >
                 Delete Destination
               </Button>
             </AlertDialog.Footer>
