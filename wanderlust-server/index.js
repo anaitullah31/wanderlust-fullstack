@@ -218,6 +218,34 @@ async function run() {
       }
     });
 
+    app.delete("/api/v1/bookings/:bookingId", async (req, res) => {
+      try {
+        const { bookingId } = req.params;
+
+        const result = await bookingCollection.deleteOne({
+          _id: new ObjectId(bookingId),
+        });
+
+        if (result.deletedCount === 0) {
+          return res.status(404).send({
+            success: false,
+            message: "Booking not found",
+          });
+        }
+
+        res.status(200).send({
+          success: true,
+          message: "Booking deleted successfully",
+          deletedCount: result.deletedCount,
+        });
+      } catch (error) {
+        res.status(500).send({
+          success: false,
+          message: "Failed to delete booking",
+          error: error.message,
+        });
+      }
+    });
     // REVIEWS OPERATIONS
     app.get("/api/v1/travelerreviews", async (req, res) => {
       try {

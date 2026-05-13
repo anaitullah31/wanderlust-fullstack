@@ -10,6 +10,7 @@ import {
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Link from "next/link";
+import DeleteBookingAlert from "../components/CancelBookingAlert";
 
 const MyBookingsPage = async () => {
   const session = await auth.api.getSession({
@@ -109,12 +110,9 @@ const MyBookingsPage = async () => {
                 </div>
 
                 <div className="flex md:self-end gap-3">
-                  <button className="flex items-center cursor-pointer gap-2 border border-red-400 px-6 py-3 text-sm text-red-500 hover:bg-red-50">
-                    <Trash2 size={14} />
-                    Cancel
-                  </button>
+                  <DeleteBookingAlert bookingId={booking._id} />
 
-                  <button className="flex items-center cursor-pointer gap-2 bg-cyan-600 px-6 py-3 text-sm text-white hover:bg-cyan-700">
+                  <button className="flex items-center cursor-pointer gap-2 bg-cyan-600 px-6 py-2 text-sm text-white hover:bg-cyan-700">
                     <Eye size={14} />
                     View
                   </button>
