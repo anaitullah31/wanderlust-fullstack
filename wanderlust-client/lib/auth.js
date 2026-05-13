@@ -10,6 +10,7 @@ const db = client.db("wanderlust");
 export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
+    autoSignIn: false, //defaults to true
   },
   database: mongodbAdapter(db, {
     // Optional: if you don't provide a client, database transactions won't be enabled.

@@ -33,7 +33,7 @@ const SignUpPage = () => {
       return;
     }
 
-    router.push("/");
+    router.push("/login");
   };
 
   return (

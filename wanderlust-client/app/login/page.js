@@ -1,8 +1,39 @@
+"use client";
 import Link from "next/link";
 import { Lock, Mail } from "lucide-react";
 import GoogleLoginButton from "../components/GoogleLoginButton";
+import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const handleSigninSubmit = async (e) => {
+    e.preventDefault();
+
+    if (loading) return;
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries());
+
+    const { data, error } = await authClient.signIn.email({
+      email: user.email,
+      password: user.password,
+      callbackURL: "/",
+      rememberMe: false,
+    });
+
+    if (error) {
+      setLoading(false);
+      alert(error.message);
+      return;
+    }
+
+    router.push("/");
+  };
+
   return (
     <div className=" bg-gray-50">
       <section className="py-16">
@@ -16,7 +47,10 @@ const LoginPage = () => {
             </p>
           </div>
 
-          <form className="bg-white border border-gray-200 shadow-md p-8 space-y-5">
+          <form
+            onSubmit={handleSigninSubmit}
+            className="bg-white border border-gray-200 shadow-md p-8 space-y-5"
+          >
             <div>
               <label className="text-sm font-medium text-black">
                 Email Address
@@ -28,6 +62,7 @@ const LoginPage = () => {
                 />
                 <input
                   type="email"
+                  name="email"
                   placeholder="Enter your email"
                   className="w-full border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-sm outline-none"
                 />
@@ -43,6 +78,7 @@ const LoginPage = () => {
                 />
                 <input
                   type="password"
+                  name="password"
                   placeholder="Enter your password"
                   className="w-full border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-sm outline-none"
                 />
@@ -62,9 +98,10 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              className="w-full cursor-pointer bg-cyan-600 py-3 text-sm font-medium text-white hover:bg-cyan-700"
+              disabled={loading}
+              className={`w-full ${loading ? "" : "cursor-pointer"} bg-cyan-600 py-3 text-sm font-medium text-white hover:bg-cyan-700 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-cyan-600`}
             >
-              Sign In
+              {loading ? "Signing In..." : "Sign In"}
             </button>
 
             <div className="flex items-center gap-3">
