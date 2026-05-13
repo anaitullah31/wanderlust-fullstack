@@ -177,6 +177,26 @@ async function run() {
     });
 
     // BOOKINGS OPERATIONS
+    app.get("/api/v1/bookings/:userId", async (req, res) => {
+      try {
+        const { userId } = req.params;
+
+        const result = await bookingCollection.find({ userId }).toArray();
+
+        res.status(200).send({
+          success: true,
+          message: "Bookings fetched successfully",
+          data: result,
+        });
+      } catch (error) {
+        res.status(500).send({
+          success: false,
+          message: "Failed to fetch bookings",
+          error: error.message,
+        });
+      }
+    });
+
     app.post("/api/v1/booking", async (req, res) => {
       try {
         const bookingData = req.body;
