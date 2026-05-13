@@ -39,6 +39,7 @@ async function run() {
     const destinationCollection = client
       .db("wanderlust")
       .collection("destination");
+    const bookingCollection = client.db("wanderlust").collection("bookings");
     const reviewsCollection = client
       .db("wanderlust")
       .collection("travelerreviews");
@@ -62,6 +63,7 @@ async function run() {
       }
     });
 
+    // DESTINATIONS OPERATIONS
     app.get("/api/v1/destinations/:id", async (req, res) => {
       try {
         const { id } = req.params;
@@ -169,6 +171,28 @@ async function run() {
         res.status(500).json({
           success: false,
           message: "Failed to delete destination",
+          error: error.message,
+        });
+      }
+    });
+
+    // BOOKINGS OPERATIONS
+    app.post("/api/v1/booking", async (req, res) => {
+      try {
+        const bookingData = req.body;
+
+        const result = await bookingCollection.insertOne(bookingData);
+
+        res.status(201).send({
+          success: true,
+          message: "Booking created successfully",
+          insertedId: result.insertedId,
+          data: result,
+        });
+      } catch (error) {
+        res.status(500).send({
+          success: false,
+          message: "Failed to create booking",
           error: error.message,
         });
       }

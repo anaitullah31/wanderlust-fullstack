@@ -1,15 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Calendar,
-  Check,
-  MapPin,
-  Star,
-} from "lucide-react";
+import { ArrowLeft, Calendar, Check, MapPin, Star } from "lucide-react";
 import EditModal from "@/app/components/EditModal";
 import DeleteAlert from "@/app/components/DeleteAlert";
+import BookingButton from "@/app/components/BookingButton";
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -131,10 +125,7 @@ const DestinationDetailsPage = async ({ params }) => {
               {departureDate}
             </div>
 
-            <button className="w-full bg-cyan-600 text-white py-3 flex items-center justify-center gap-2 hover:bg-cyan-700 transition">
-              Book Now
-              <ArrowRight size={16} />
-            </button>
+            <BookingButton destinationDetails={destinationDetails} />
 
             <div className="mt-5 space-y-2 text-sm text-gray-600">
               <p className="flex items-center gap-2">
