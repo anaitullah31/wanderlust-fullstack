@@ -1,11 +1,14 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { FcGoogle } from "react-icons/fc";
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = async () => {
-    // Google login logic here
-    console.log("Google Login");
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+    console.log(data);
   };
 
   return (
