@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const { createRemoteJWKSet, jwtVerify } = require("jose-cjs");
 
 const port = process.env.PORT || 5000;
 
@@ -30,6 +31,27 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
+
+const JWKS = createRemoteJWKSet(new URL("http://localhost:3000/api/auth/jwks"));
+
+const verifyToken = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const { payload } = await jwtVerify(token, JWKS);
+    // console.log(payload);
+    next();
+  } catch (error) {
+    return res.status(4.3).json({ message: "Forbidden" });
+  }
+};
 
 async function run() {
   try {
@@ -64,7 +86,7 @@ async function run() {
     });
 
     // DESTINATIONS OPERATIONS
-    app.get("/api/v1/destinations/:id", async (req, res) => {
+    app.get("/api/v1/destinations/:id", verifyToken, async (req, res) => {
       try {
         const { id } = req.params;
 
@@ -123,7 +145,7 @@ async function run() {
           },
           {
             $set: updatedData,
-          },
+          }
         );
 
         if (result.matchedCount === 0) {
@@ -197,7 +219,7 @@ async function run() {
       }
     });
 
-    app.post("/api/v1/booking", async (req, res) => {
+    app.post("/api/v1/booking", verifyToken, async (req, res) => {
       try {
         const bookingData = req.body;
 
@@ -269,7 +291,7 @@ async function run() {
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!",
+      "Pinged your deployment. You successfully connected to MongoDB!"
     );
   } finally {
     // Ensures that the client will close when you finish/error

@@ -4,12 +4,21 @@ import { ArrowLeft, Calendar, Check, MapPin, Star } from "lucide-react";
 import EditModal from "@/app/components/EditModal";
 import DeleteAlert from "@/app/components/DeleteAlert";
 import BookingButton from "@/app/components/BookingButton";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
 
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
   const res = await fetch(`http://localhost:5000/api/v1/destinations/${id}`, {
     cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   const data = await res.json();

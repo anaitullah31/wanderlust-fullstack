@@ -24,9 +24,9 @@ const BookingButton = ({ destinationDetails }) => {
   } = destinationDetails;
 
   const bookingData = {
-    userId: user.id,
-    userImage: user.image,
-    userName: user.name,
+    userId: user?.id,
+    userImage: user?.image,
+    userName: user?.name,
     destinationId,
     destinationName,
     country,
@@ -38,10 +38,12 @@ const BookingButton = ({ destinationDetails }) => {
   };
 
   const handleBooking = async () => {
+    const { data: tokenData } = await authClient.token();
     const res = await fetch("http://localhost:5000/api/v1/booking", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenData?.token}`,
       },
       body: JSON.stringify(bookingData),
     });
