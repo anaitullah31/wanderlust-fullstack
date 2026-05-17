@@ -12,7 +12,8 @@ const CancelBookingAlert = ({ bookingId }) => {
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/bookings/${bookingId}`,
       {
         method: "DELETE",
-      },
+        cache: "no-store",
+      }
     );
     const data = await res.json();
     if (data.deletedCount > 0) {

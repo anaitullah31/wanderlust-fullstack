@@ -39,11 +39,11 @@ const JWKS = createRemoteJWKSet(
 const verifyToken = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
-    res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized" });
   }
   const token = authHeader.split(" ")[1];
   if (!token) {
-    res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
   try {
@@ -51,7 +51,7 @@ const verifyToken = async (req, res, next) => {
     // console.log("PAYLOAD", payload);
     next();
   } catch (error) {
-    return res.status(4.3).json({ message: "Forbidden" });
+    return res.status(403).json({ message: "Forbidden" });
   }
 };
 
@@ -116,7 +116,7 @@ async function run() {
         });
       }
     });
-    app.post("/api/v1/destinations", async (req, res) => {
+    app.post("/api/v1/destinations", verifyToken, async (req, res) => {
       try {
         const destinationData = req.body;
 
@@ -136,7 +136,7 @@ async function run() {
       }
     });
 
-    app.patch("/api/v1/destinations/:id", async (req, res) => {
+    app.patch("/api/v1/destinations/:id", verifyToken, async (req, res) => {
       try {
         const { id } = req.params;
         const updatedData = req.body;
@@ -171,7 +171,7 @@ async function run() {
       }
     });
 
-    app.delete("/api/v1/destinations/:id", async (req, res) => {
+    app.delete("/api/v1/destinations/:id", verifyToken, async (req, res) => {
       try {
         const { id } = req.params;
 
@@ -201,7 +201,7 @@ async function run() {
     });
 
     // BOOKINGS OPERATIONS
-    app.get("/api/v1/bookings/:userId", async (req, res) => {
+    app.get("/api/v1/bookings/:userId", verifyToken, async (req, res) => {
       try {
         const { userId } = req.params;
 
@@ -242,7 +242,7 @@ async function run() {
       }
     });
 
-    app.delete("/api/v1/bookings/:bookingId", async (req, res) => {
+    app.delete("/api/v1/bookings/:bookingId", verifyToken, async (req, res) => {
       try {
         const { bookingId } = req.params;
 
