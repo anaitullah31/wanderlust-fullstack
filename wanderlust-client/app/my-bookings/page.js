@@ -18,7 +18,7 @@ const MyBookingsPage = async () => {
   });
 
   const res = await fetch(
-    `http://localhost:5000/api/v1/bookings/${session?.user?.id}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/bookings/${session?.user?.id}`
   );
   const data = await res.json();
   // console.log(data.data);

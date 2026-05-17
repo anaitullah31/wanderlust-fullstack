@@ -19,7 +19,7 @@ const AddDestinationPage = () => {
     const formData = new FormData(e.currentTarget);
     const destination = Object.fromEntries(formData.entries());
 
-    const res = await fetch("http://localhost:5000/api/v1/destinations", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/destinations`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

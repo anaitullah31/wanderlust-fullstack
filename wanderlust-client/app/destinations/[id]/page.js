@@ -14,7 +14,7 @@ const DestinationDetailsPage = async ({ params }) => {
     headers: await headers(),
   });
 
-  const res = await fetch(`http://localhost:5000/api/v1/destinations/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/destinations/${id}`, {
     cache: "no-store",
     headers: {
       Authorization: `Bearer ${token}`,
