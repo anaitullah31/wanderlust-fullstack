@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Card,
@@ -31,6 +32,7 @@ const EditModal = ({ destinationDetails }) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const destination = Object.fromEntries(formData.entries());
+    const { data: tokenData } = await authClient.token();
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/destinations/${_id}`,
@@ -38,9 +40,10 @@ const EditModal = ({ destinationDetails }) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenData.token}`,
         },
         body: JSON.stringify(destination),
-      },
+      }
     );
     const data = await res.json();
     if (data.modifiedCount > 0) {

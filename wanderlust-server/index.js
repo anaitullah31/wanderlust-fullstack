@@ -221,7 +221,7 @@ async function run() {
       }
     });
 
-    app.post("/api/v1/booking", verifyToken, async (req, res) => {
+    app.post("/api/v1/booking", async (req, res) => {
       try {
         const bookingData = req.body;
 
@@ -242,7 +242,7 @@ async function run() {
       }
     });
 
-    app.delete("/api/v1/bookings/:bookingId", verifyToken, async (req, res) => {
+    app.delete("/api/v1/bookings/:bookingId", async (req, res) => {
       try {
         const { bookingId } = req.params;
 

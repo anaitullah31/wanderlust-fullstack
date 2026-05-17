@@ -1,17 +1,20 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button, Modal } from "@heroui/react";
 import { Trash2 } from "lucide-react";
 import { redirect } from "next/navigation";
 const DeleteAlert = ({ destinationDetails }) => {
   const handleDelete = async () => {
+    const { data: tokenData } = await authClient.token();
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/destinations/${destinationDetails._id}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "applicaton/json",
+          Authorization: `Bearer ${tokenData.token}`,
         },
-      },
+      }
     );
     const data = await res.json();
     if (data.deletedCount > 0) {

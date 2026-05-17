@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import {
   FieldError,
   Input,
@@ -16,19 +17,23 @@ import React from "react";
 const AddDestinationPage = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
     const destination = Object.fromEntries(formData.entries());
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/destinations`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(destination),
-    });
+    const { data: tokenData } = await authClient.token();
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/destinations`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenData.token}`,
+        },
+        body: JSON.stringify(destination),
+      }
+    );
     const data = await res.json();
-    console.log(data.insertedId);
-    if(data.insertedId){
+    if (data.insertedId) {
       redirect("/destinations");
     }
   };
